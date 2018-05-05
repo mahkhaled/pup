@@ -56,6 +56,7 @@ class Login extends React.Component {
         <Row>
           <Col xs={12} sm={6} md={5} lg={4}>
             <h4 className="page-header">Log In</h4>
+            {/*
             <Row>
               <Col xs={12}>
                 <OAuthLoginButtons
@@ -67,6 +68,7 @@ class Login extends React.Component {
                 />
               </Col>
             </Row>
+          */}
             <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}>
               <FormGroup>
                 <ControlLabel>Email Address</ControlLabel>

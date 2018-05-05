@@ -30,5 +30,5 @@ export default (handlebarsMarkup, context, options) => {
     return options && !options.inlineCss ? base(baseContext) : juice(base(baseContext));
   }
 
-  throw new Error('[Pup] Please pass Handlebars markup to compile and a context object with data mapping to the Handlebars expressions used in your template (e.g., {{expressionToReplace}}).');
+  throw new Error('[Dude] Please pass Handlebars markup to compile and a context object with data mapping to the Handlebars expressions used in your template (e.g., {{expressionToReplace}}).');
 };

@@ -47,6 +47,8 @@ const renderOrder = (doc, match, history) => (doc ? (
         </ButtonToolbar>
       ) : ''}
     </div>
+    { doc.ownerName }
+    { " - " }
     { doc && doc.location }
   </div>
 ) : <NotFound />);

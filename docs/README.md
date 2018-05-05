@@ -32,7 +32,7 @@ cd mySnackTime && meteor npm install
 meteor npm start
 ```
 
-> Note : If you receive any errors in your terminal when you start up Pup related to meteor npm install, make sure to follow the suggested commands to ensure dependencies are properly installed.
+> Note : If you receive any errors in your terminal when you start up Pup related to `meteor npm install`, make sure to follow the suggested commands to ensure dependencies are properly installed.
 
 - Then Signup users with emails : `officeboy1@yourdomain.com` & `officeboy2@yourdomain.com`
 > Note : You can use a any email for the officeboy, we will assign him a role in a moment.
@@ -65,6 +65,11 @@ db.users.update(
 )
 ```
 
+- Now you're ready to signup with your email, and starting having your delicious snaks
+
+- AND, you're ready to start BADR Intern's Day 2018 challenges. Get ready to have some fun !
+
+> Note : We'll provide a Virtual Machine, on the Hackathon Day, for those who didn't complete the above steps before they arrive @ BADR. But if you prefer to use your machine/OS, rather than the provided Virtual Machine, it's recommended that you follow the above steps before you arrive @ BADR, since they will take some time to finish.
 
 ---
 

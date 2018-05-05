@@ -1,5 +1,5 @@
 {
-  "name": "pup",
+  "name": "snack-time",
   "private": true,
   "scripts": {
     "start": "meteor --settings settings-development.json",
@@ -124,9 +124,9 @@
   "description": "A boilerplate for products.",
   "main": "index.js",
   "repository": {
-    "url": "git@cleverbeagle:cleverbeagle/pup.git",
+    "url": "git@github.com:mostafaelganainy/pup.git",
     "type": "git"
   },
-  "author": "cleverbeagle <ryan.glover@cleverbeagle.com>",
+  "author": "Mostafa Elganainy <mostafa.ali@badrit.com>",
   "license": "MIT"
 }

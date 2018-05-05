@@ -47,7 +47,7 @@ Meteor.methods({
         return orderId; // Return _id so we can redirect to order after update.
       }
 
-      throw new Meteor.Error('403', 'Sorry, pup. You\'re not allowed to edit this order.');
+      throw new Meteor.Error('403', 'Sorry, dude. You\'re not allowed to edit this order.');
     } catch (exception) {
       handleMethodException(exception);
     }
@@ -58,18 +58,11 @@ Meteor.methods({
     try {
 
       if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {
-        Orders.update({_id: orderId} , { $set: { delivered: true } }, function(error, count){
-          if (error) {
-              throw new Meteor.Error(500, error.message);
-          } else {
-              console.log(count + " Docs Update Successful");
-          }
-        // response
-        });
+        Orders.update({_id: orderId} , { $set: { delivered: true } });
         return orderId; // Return _id so we can redirect to order after update.
       }
 
-      throw new Meteor.Error('403', 'Sorry, pup. You\'re not allowed to edit this order.');
+      throw new Meteor.Error('403', 'Sorry, dude. You\'re not allowed to edit this order.');
     } catch (exception) {
       handleMethodException(exception);
     }
@@ -84,7 +77,7 @@ Meteor.methods({
         return Orders.remove(orderId);
       }
 
-      throw new Meteor.Error('403', 'Sorry, pup. You\'re not allowed to delete this order.');
+      throw new Meteor.Error('403', 'Sorry, dude. You\'re not allowed to delete this order.');
     } catch (exception) {
       handleMethodException(exception);
     }

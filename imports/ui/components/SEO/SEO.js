@@ -33,17 +33,17 @@ const SEO = ({
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@clvrbgl" />
-    <meta name="twitter:title" content={`${title} | Pup`} />
+    <meta name="twitter:title" content={`${title} | SnackTime`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:creator" content={`@${twitter}` || '@clvrbgl'} />
     <meta name="twitter:image:src" content={(images && images.twitter) || seoImageURL(_.sample(seoImages.twitter))} />
 
-    <meta property="og:title" content={`${title} | Pup`} />
+    <meta property="og:title" content={`${title} | SnackTime`} />
     <meta property="og:type" content={contentType} />
     <meta property="og:url" content={seoURL(path)} />
     <meta property="og:image" content={(images && images.facebook) || seoImageURL(_.sample(seoImages.facebook))} />
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content="Pup" />
+    <meta property="og:site_name" content="Snack Time" />
 
     <meta name="fb:app_id" content="196001354345637" />
 
