@@ -24,7 +24,14 @@ Our Sample App here, is a modified version of "Pup". A boilerplate that is inten
 
 You'll be required to complete a specific set of steps toward the goal of this challenge. But if you got yourself familiar with the above boilerplate's code before the challenge starts, you would have put yourself ahead of the pack, before even the challenge starts.
 
-
+## Getting Started 
+First install the dependencies
+```console
+git clone https://github.com/mostafaelganainy/pup.git mySnackTime
+cd mySnackTime && meteor npm install
+meteor npm start
+```
+Note : If you receive any errors in your terminal when you start up Pup related to meteor npm install, make sure to follow the suggested commands to ensure dependencies are properly installed.
 ---
 
 Need help or questions ? contact us : hr@badrit.com
