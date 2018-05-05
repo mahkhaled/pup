@@ -7,16 +7,16 @@ import handleMethodException from '../../modules/handle-method-exception';
 import rateLimit from '../../modules/rate-limit';
 
 Meteor.methods({
-  'Orders.findOne': function OrdersFindOne(OrderId) {
-    check(OrderId, Match.OneOf(String, undefined));
+  'orders.findOne': function ordersFindOne(orderId) {
+    check(orderId, Match.OneOf(String, undefined));
 
     try {
-      return Orders.findOne(OrderId);
+      return Orders.findOne(orderId);
     } catch (exception) {
       handleMethodException(exception);
     }
   },
-  'Orders.insert': function OrdersInsert(doc) {
+  'orders.insert': function ordersInsert(doc) {
     check(doc, {
       title: String,
       body: String,
@@ -28,7 +28,7 @@ Meteor.methods({
       handleMethodException(exception);
     }
   },
-  'Orders.update': function OrdersUpdate(doc) {
+  'orders.update': function ordersUpdate(doc) {
     check(doc, {
       _id: String,
       title: String,
@@ -36,30 +36,30 @@ Meteor.methods({
     });
 
     try {
-      const OrderId = doc._id;
-      const docToUpdate = Orders.findOne(OrderId, { fields: { owner: 1 } });
+      const orderId = doc._id;
+      const docToUpdate = Orders.findOne(orderId, { fields: { owner: 1 } });
 
       if (docToUpdate.owner === this.userId) {
-        Orders.update(OrderId, { $set: doc });
-        return OrderId; // Return _id so we can redirect to Order after update.
+        Orders.update(orderId, { $set: doc });
+        return orderId; // Return _id so we can redirect to order after update.
       }
 
-      throw new Meteor.Error('403', 'Sorry, pup. You\'re not allowed to edit this Order.');
+      throw new Meteor.Error('403', 'Sorry, pup. You\'re not allowed to edit this order.');
     } catch (exception) {
       handleMethodException(exception);
     }
   },
-  'Orders.remove': function OrdersRemove(OrderId) {
-    check(OrderId, String);
+  'orders.remove': function ordersRemove(orderId) {
+    check(orderId, String);
 
     try {
-      const docToRemove = Orders.findOne(OrderId, { fields: { owner: 1 } });
+      const docToRemove = Orders.findOne(orderId, { fields: { owner: 1 } });
 
       if (docToRemove.owner === this.userId) {
-        return Orders.remove(OrderId);
+        return Orders.remove(orderId);
       }
 
-      throw new Meteor.Error('403', 'Sorry, pup. You\'re not allowed to delete this Order.');
+      throw new Meteor.Error('403', 'Sorry, pup. You\'re not allowed to delete this order.');
     } catch (exception) {
       handleMethodException(exception);
     }
@@ -68,9 +68,9 @@ Meteor.methods({
 
 rateLimit({
   methods: [
-    'Orders.insert',
-    'Orders.update',
-    'Orders.remove',
+    'orders.insert',
+    'orders.update',
+    'orders.remove',
   ],
   limit: 5,
   timeRange: 1000,
