@@ -65,9 +65,6 @@ db.users.update(
 )
 ```
 
-- 
-
-- 
 
 ---
 

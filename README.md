@@ -25,13 +25,47 @@ Our Sample App here, is a modified version of "Pup". A boilerplate that is inten
 You'll be required to complete a specific set of steps toward the goal of this challenge. But if you got yourself familiar with the above boilerplate's code before the challenge starts, you would have put yourself ahead of the pack, before even the challenge starts.
 
 ## Getting Started 
-First install the dependencies
+- First install the dependencies
 ```Bash
 git clone https://github.com/mostafaelganainy/pup.git mySnackTime
 cd mySnackTime && meteor npm install
 meteor npm start
 ```
-Note : If you receive any errors in your terminal when you start up Pup related to meteor npm install, make sure to follow the suggested commands to ensure dependencies are properly installed.
+
+> Note : If you receive any errors in your terminal when you start up Pup related to meteor npm install, make sure to follow the suggested commands to ensure dependencies are properly installed.
+
+- Then Signup users with emails : `officeboy1@yourdomain.com` & `officeboy2@yourdomain.com`
+> Note : You can use a any email for the officeboy, we will assign him a role in a moment.
+
+- Type in the command line : `meteor mongo` to open a mongo session
+
+- In the mongo shell, assign to the new user the role of 'office-boy' :
+
+```JavaScript
+db.roles.insert({name: "office-boy"})
+
+db.users.update(
+  {
+    emails: {
+      $elemMatch: { 
+        $or : [
+          {
+            address:"officeboy1@yourdomain.com"
+          },
+          {
+            address:"officeboy2@yourdomain.com"
+          }
+        ]
+      }
+    }
+  }, 
+  {
+    $addToSet: {roles: "office-boy"}
+  }
+)
+```
+
+
 ---
 
 Need help or questions ? contact us : hr@badrit.com
