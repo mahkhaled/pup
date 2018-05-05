@@ -1,9 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import Orders from '../Orders';
+import { Roles } from 'meteor/alanning:roles';
 
 Meteor.publish('orders', function orders() {
-  return Orders.find({ owner: this.userId });
+  if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {
+    console.log("Hiiiiiiiii");
+    return Orders.find();
+  } else {
+    console.log("Whyyyyyyyy");
+    return Orders.find({ owner: this.userId });
+  }
 });
 
 // Note: orders.view is also used when editing an existing order.
