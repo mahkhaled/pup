@@ -26,7 +26,7 @@ You'll be required to complete a specific set of steps toward the goal of this c
 
 ## Getting Started 
 First install the dependencies
-```console
+```Bash
 git clone https://github.com/mostafaelganainy/pup.git mySnackTime
 cd mySnackTime && meteor npm install
 meteor npm start
