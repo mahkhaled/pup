@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import Orders from '../../../api/Orders/Orders';
-import OrderEditor from '../../components/OrderEditor/OrderEditor';
-import NotFound from '../NotFound/NotFound';
+import Orders from '../../../../api/Orders/Orders';
+import OrderEditor from '../../../components/OrderEditor/OrderEditor';
+import NotFound from '../../NotFound/NotFound';
 
 const EditOrder = ({ doc, history }) => (doc ? (
   <div className="EditOrder">

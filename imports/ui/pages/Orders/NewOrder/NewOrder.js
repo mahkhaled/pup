@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import OrderEditor from '../../components/OrderEditor/OrderEditor';
+import OrderEditor from '../../../components/OrderEditor/OrderEditor';
 
 const NewOrder = ({ history }) => (
   <div className="NewOrder">

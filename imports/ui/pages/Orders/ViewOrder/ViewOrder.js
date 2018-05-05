@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Bert } from 'meteor/themeteorchef:bert';
-import Orders from '../../../api/Orders/Orders';
-import SEO from '../../components/SEO/SEO';
-import NotFound from '../NotFound/NotFound';
+import Orders from '../../../../api/Orders/Orders';
+import SEO from '../../../components/SEO/SEO';
+import NotFound from '../../NotFound/NotFound';
 
 const handleRemove = (orderId, history) => {
   if (confirm('Are you sure? This is permanent!')) {
@@ -35,7 +35,7 @@ const renderOrder = (doc, match, history) => (doc ? (
       twitter="clvrbgl"
     />
     <div className="page-header clearfix">
-      <h4 className="pull-left">{ doc && doc.title }</h4>
+      <h4 className="pull-left">{ doc && doc.description }</h4>
       {Meteor.isClient && Meteor.userId() ? (
         <ButtonToolbar className="pull-right">
           <ButtonGroup bsSize="small">
@@ -47,7 +47,7 @@ const renderOrder = (doc, match, history) => (doc ? (
         </ButtonToolbar>
       ) : ''}
     </div>
-    { doc && doc.body }
+    { doc && doc.location }
   </div>
 ) : <NotFound />);
 

@@ -10,8 +10,8 @@ const ordersSeed = userId => ({
   model(dataIndex) {
     return {
       owner: userId,
-      title: `Order #${dataIndex + 1}`,
-      body: `This is the body of order #${dataIndex + 1}`,
+      location: `Location for order number : #${dataIndex + 1}`,
+      description: `This is the description of order #${dataIndex + 1}`,
     };
   },
 });

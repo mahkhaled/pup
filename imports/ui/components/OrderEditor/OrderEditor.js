@@ -12,19 +12,19 @@ class OrderEditor extends React.Component {
     const component = this;
     validate(component.form, {
       rules: {
-        title: {
+        location: {
           required: true,
         },
-        body: {
+        description: {
           required: true,
         },
       },
       messages: {
-        title: {
-          required: 'Need a title in here, Seuss.',
+        location: {
+          required: 'Hey, telepathy will not work here, we need to know where the hell are you hiding.',
         },
-        body: {
-          required: 'This thneeds a body, please.',
+        description: {
+          required: "Well, I'm not your Mom! you need to say what you want exactly !!",
         },
       },
       submitHandler() { component.handleSubmit(component.form); },
@@ -36,8 +36,8 @@ class OrderEditor extends React.Component {
     const existingOrder = this.props.doc && this.props.doc._id;
     const methodToCall = existingOrder ? 'orders.update' : 'orders.insert';
     const doc = {
-      title: form.title.value.trim(),
-      body: form.body.value.trim(),
+      location: form.location.value.trim(),
+      description: form.description.value.trim(),
     };
 
     if (existingOrder) doc._id = existingOrder;
@@ -57,24 +57,24 @@ class OrderEditor extends React.Component {
   render() {
     const { doc } = this.props;
     return (
-      <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}>
+      <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}>        
         <FormGroup>
-          <ControlLabel>Title</ControlLabel>
-          <input
-            type="text"
+          <ControlLabel>Description</ControlLabel>
+          <textarea
             className="form-control"
-            name="title"
-            defaultValue={doc && doc.title}
-            placeholder="Oh, The Places You'll Go!"
+            name="description"
+            defaultValue={doc && doc.description}
+            placeholder="Tell me exactly what you want . We won't take 'Ay 7aga' as an answer ! "
           />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>Body</ControlLabel>
-          <textarea
+          <ControlLabel>Location</ControlLabel>
+          <input
+            type="text"
             className="form-control"
-            name="body"
-            defaultValue={doc && doc.body}
-            placeholder="Congratulations! Today is your day. You're off to Great Places! You're off and away!"
+            name="location"
+            defaultValue={doc && doc.location}
+            placeholder="Where the hell are you hiding ?!"
           />
         </FormGroup>
         <Button type="submit" bsStyle="success">
@@ -86,7 +86,7 @@ class OrderEditor extends React.Component {
 }
 
 OrderEditor.defaultProps = {
-  doc: { title: '', body: '' },
+  doc: { location: '', description: '' },
 };
 
 OrderEditor.propTypes = {

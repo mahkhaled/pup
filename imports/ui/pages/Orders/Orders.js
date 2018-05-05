@@ -41,8 +41,8 @@ const Orders = ({
       <Table responsive>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Last Updated</th>
+            <th>Location</th>
+            <th>Description</th>
             <th>Created</th>
             <th />
             <th />
@@ -50,12 +50,12 @@ const Orders = ({
         </thead>
         <tbody>
           {orders.map(({
-            _id, title, createdAt, updatedAt,
+            _id, location, createdAt, description,
           }) => (
             <tr key={_id}>
-              <td>{title}</td>
-              <td>{timeago(updatedAt)}</td>
-              <td>{monthDayYearAtTime(createdAt)}</td>
+              <td>{location}</td>
+              <td>{description}</td>
+              <td>{timeago(createdAt)}</td>
               <td>
                 <Button
                   bsStyle="primary"

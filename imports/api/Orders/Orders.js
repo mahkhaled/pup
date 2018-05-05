@@ -36,13 +36,13 @@ Orders.schema = new SimpleSchema({
       if (this.isInsert || this.isUpdate) return (new Date()).toISOString();
     },
   },
-  title: {
+  location: {
     type: String,
-    label: 'The title of the Order.',
+    label: 'The location to deliver the Order.',
   },
-  body: {
+  description: {
     type: String,
-    label: 'The body of the Order.',
+    label: 'The description of the Order.',
   },
 });
 
