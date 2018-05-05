@@ -13,10 +13,10 @@ import Navigation from '../../components/Navigation/Navigation';
 import Authenticated from '../../components/Authenticated/Authenticated';
 import Public from '../../components/Public/Public';
 import Index from '../../pages/Index/Index';
-import Documents from '../../pages/Documents/Documents';
-import NewDocument from '../../pages/NewDocument/NewDocument';
-import ViewDocument from '../../pages/ViewDocument/ViewDocument';
-import EditDocument from '../../pages/EditDocument/EditDocument';
+import Orders from '../../pages/Orders/Orders';
+import NewOrder from '../../pages/NewOrder/NewOrder';
+import ViewOrder from '../../pages/ViewOrder/ViewOrder';
+import EditOrder from '../../pages/EditOrder/EditOrder';
 import Signup from '../../pages/Signup/Signup';
 import Login from '../../pages/Login/Login';
 import Logout from '../../pages/Logout/Logout';
@@ -96,10 +96,10 @@ class App extends React.Component {
         <Grid>
           <Switch>
             <Route exact name="index" path="/" component={Index} />
-            <Authenticated exact path="/documents" component={Documents} setAfterLoginPath={setAfterLoginPath} {...props} {...state} />
-            <Authenticated exact path="/documents/new" component={NewDocument} setAfterLoginPath={setAfterLoginPath} {...props} {...state} />
-            <Route exact path="/documents/:_id" component={ViewDocument} />
-            <Authenticated exact path="/documents/:_id/edit" component={EditDocument} setAfterLoginPath={setAfterLoginPath} {...props} {...state} />
+            <Authenticated exact path="/orders" component={Orders} setAfterLoginPath={setAfterLoginPath} {...props} {...state} />
+            <Authenticated exact path="/orders/new" component={NewOrder} setAfterLoginPath={setAfterLoginPath} {...props} {...state} />
+            <Route exact path="/orders/:_id" component={ViewOrder} />
+            <Authenticated exact path="/orders/:_id/edit" component={EditOrder} setAfterLoginPath={setAfterLoginPath} {...props} {...state} />
             <Authenticated exact path="/profile" component={Profile} setAfterLoginPath={setAfterLoginPath} {...props} {...state} />
             <Public path="/signup" component={Signup} {...props} {...state} />
             <Public path="/login" component={Login} {...props} {...state} />

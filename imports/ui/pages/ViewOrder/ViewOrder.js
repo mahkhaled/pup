@@ -6,29 +6,29 @@ import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import { Bert } from 'meteor/themeteorchef:bert';
-import Documents from '../../../api/Documents/Documents';
+import Orders from '../../../api/Orders/Orders';
 import SEO from '../../components/SEO/SEO';
 import NotFound from '../NotFound/NotFound';
 
-const handleRemove = (documentId, history) => {
+const handleRemove = (orderId, history) => {
   if (confirm('Are you sure? This is permanent!')) {
-    Meteor.call('documents.remove', documentId, (error) => {
+    Meteor.call('orders.remove', orderId, (error) => {
       if (error) {
         Bert.alert(error.reason, 'danger');
       } else {
-        Bert.alert('Document deleted!', 'success');
-        history.push('/documents');
+        Bert.alert('Order deleted!', 'success');
+        history.push('/orders');
       }
     });
   }
 };
 
-const renderDocument = (doc, match, history) => (doc ? (
-  <div className="ViewDocument">
+const renderOrder = (doc, match, history) => (doc ? (
+  <div className="ViewOrder">
     <SEO
       title={doc.title}
       description={doc.body}
-      url={`documents/${doc._id}`}
+      url={`orders/${doc._id}`}
       contentType="article"
       published={doc.createdAt}
       updated={doc.updatedAt}
@@ -51,13 +51,13 @@ const renderDocument = (doc, match, history) => (doc ? (
   </div>
 ) : <NotFound />);
 
-const ViewDocument = ({ doc, match, history }) => (renderDocument(doc, match, history));
+const ViewOrder = ({ doc, match, history }) => (renderOrder(doc, match, history));
 
-ViewDocument.defaultProps = {
+ViewOrder.defaultProps = {
   doc: null,
 };
 
-ViewDocument.propTypes = {
+ViewOrder.propTypes = {
   doc: PropTypes.object,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
@@ -66,11 +66,11 @@ ViewDocument.propTypes = {
 export default compose(
   connect(state => ({ ...state })),
   withTracker(({ match }) => {
-    const documentId = match.params._id;
-    if (Meteor.isClient) Meteor.subscribe('documents.view', documentId);
+    const orderId = match.params._id;
+    if (Meteor.isClient) Meteor.subscribe('orders.view', orderId);
 
     return {
-      doc: Documents.findOne(documentId),
+      doc: Orders.findOne(orderId),
     };
   }),
-)(ViewDocument);
+)(ViewOrder);

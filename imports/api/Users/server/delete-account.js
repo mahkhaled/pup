@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 
 import { Meteor } from 'meteor/meteor';
-import Documents from '../../Documents/Documents';
+import Orders from '../../Orders/Orders';
 
 let action;
 
@@ -13,18 +13,18 @@ const deleteUser = (userId) => {
   }
 };
 
-const deleteDocuments = (userId) => {
+const deleteOrders = (userId) => {
   try {
-    return Documents.remove({ owner: userId });
+    return Orders.remove({ owner: userId });
   } catch (exception) {
-    throw new Error(`[deleteAccount.deleteDocuments] ${exception.message}`);
+    throw new Error(`[deleteAccount.deleteOrders] ${exception.message}`);
   }
 };
 
 const deleteAccount = ({ userId }, promise) => {
   try {
     action = promise;
-    deleteDocuments(userId);
+    deleteOrders(userId);
     deleteUser(userId);
     action.resolve();
   } catch (exception) {

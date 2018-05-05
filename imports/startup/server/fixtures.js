@@ -1,17 +1,17 @@
 import seeder from '@cleverbeagle/seeder';
 import { Meteor } from 'meteor/meteor';
-import Documents from '../../api/Documents/Documents';
+import Orders from '../../api/Orders/Orders';
 
-const documentsSeed = userId => ({
-  collection: Documents,
+const ordersSeed = userId => ({
+  collection: Orders,
   environments: ['development', 'staging'],
   noLimit: true,
   modelCount: 5,
   model(dataIndex) {
     return {
       owner: userId,
-      title: `Document #${dataIndex + 1}`,
-      body: `This is the body of document #${dataIndex + 1}`,
+      title: `Order #${dataIndex + 1}`,
+      body: `This is the body of order #${dataIndex + 1}`,
     };
   },
 });
@@ -30,7 +30,7 @@ seeder(Meteor.users, {
     },
     roles: ['admin'],
     data(userId) {
-      return documentsSeed(userId);
+      return ordersSeed(userId);
     },
   }],
   modelCount: 5,
@@ -47,7 +47,7 @@ seeder(Meteor.users, {
       },
       roles: ['user'],
       data(userId) {
-        return documentsSeed(userId);
+        return ordersSeed(userId);
       },
     };
   },

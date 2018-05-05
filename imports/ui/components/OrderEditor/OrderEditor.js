@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import validate from '../../../modules/validate';
 
-class DocumentEditor extends React.Component {
+class OrderEditor extends React.Component {
   componentDidMount() {
     const component = this;
     validate(component.form, {
@@ -33,23 +33,23 @@ class DocumentEditor extends React.Component {
 
   handleSubmit(form) {
     const { history } = this.props;
-    const existingDocument = this.props.doc && this.props.doc._id;
-    const methodToCall = existingDocument ? 'documents.update' : 'documents.insert';
+    const existingOrder = this.props.doc && this.props.doc._id;
+    const methodToCall = existingOrder ? 'orders.update' : 'orders.insert';
     const doc = {
       title: form.title.value.trim(),
       body: form.body.value.trim(),
     };
 
-    if (existingDocument) doc._id = existingDocument;
+    if (existingOrder) doc._id = existingOrder;
 
-    Meteor.call(methodToCall, doc, (error, documentId) => {
+    Meteor.call(methodToCall, doc, (error, orderId) => {
       if (error) {
         Bert.alert(error.reason, 'danger');
       } else {
-        const confirmation = existingDocument ? 'Document updated!' : 'Document added!';
+        const confirmation = existingOrder ? 'Order updated!' : 'Order added!';
         this.form.reset();
         Bert.alert(confirmation, 'success');
-        history.push(`/documents/${documentId}`);
+        history.push(`/orders/${orderId}`);
       }
     });
   }
@@ -78,20 +78,20 @@ class DocumentEditor extends React.Component {
           />
         </FormGroup>
         <Button type="submit" bsStyle="success">
-          {doc && doc._id ? 'Save Changes' : 'Add Document'}
+          {doc && doc._id ? 'Save Changes' : 'Add Order'}
         </Button>
       </form>
     );
   }
 }
 
-DocumentEditor.defaultProps = {
+OrderEditor.defaultProps = {
   doc: { title: '', body: '' },
 };
 
-DocumentEditor.propTypes = {
+OrderEditor.propTypes = {
   doc: PropTypes.object,
   history: PropTypes.object.isRequired,
 };
 
-export default DocumentEditor;
+export default OrderEditor;

@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 
 import JSZip from 'jszip';
-import Documents from '../../Documents/Documents';
+import Orders from '../../Orders/Orders';
 
 let action;
 
@@ -14,21 +14,21 @@ const generateZip = (zip) => {
   }
 };
 
-const addDocumentsToZip = (documents, zip) => {
+const addOrdersToZip = (orders, zip) => {
   try {
-    documents.forEach((document) => {
-      zip.file(`${document.title}.txt`, `${document.title}\n\n${document.body}`);
+    orders.forEach((order) => {
+      zip.file(`${order.title}.txt`, `${order.title}\n\n${order.body}`);
     });
   } catch (exception) {
-    throw new Error(`[exportData.addDocumentsToZip] ${exception.message}`);
+    throw new Error(`[exportData.addOrdersToZip] ${exception.message}`);
   }
 };
 
-const getDocuments = (userId) => {
+const getOrders = (userId) => {
   try {
-    return Documents.find({ owner: userId }).fetch();
+    return Orders.find({ owner: userId }).fetch();
   } catch (exception) {
-    throw new Error(`[exportData.getDocuments] ${exception.message}`);
+    throw new Error(`[exportData.getOrders] ${exception.message}`);
   }
 };
 
@@ -36,8 +36,8 @@ const exportData = ({ userId }, promise) => {
   try {
     action = promise;
     const zip = new JSZip();
-    const documents = getDocuments(userId);
-    addDocumentsToZip(documents, zip);
+    const orders = getOrders(userId);
+    addOrdersToZip(orders, zip);
     generateZip(zip);
   } catch (exception) {
     action.reject(exception.message);
