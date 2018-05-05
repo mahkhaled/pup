@@ -5,10 +5,8 @@ import { Roles } from 'meteor/alanning:roles';
 
 Meteor.publish('orders', function orders() {
   if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {
-    console.log("Hiiiiiiiii");
     return Orders.find();
   } else {
-    console.log("Whyyyyyyyy");
     return Orders.find({ owner: this.userId });
   }
 });

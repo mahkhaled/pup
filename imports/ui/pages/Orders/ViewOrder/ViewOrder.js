@@ -36,7 +36,7 @@ const renderOrder = (doc, match, history) => (doc ? (
     />
     <div className="page-header clearfix">
       <h4 className="pull-left">{ doc && doc.description }</h4>
-      {Meteor.isClient && Meteor.userId() ? (
+      {Meteor.isClient && doc.owner == Meteor.userId() && !doc.delivered ? (
         <ButtonToolbar className="pull-right">
           <ButtonGroup bsSize="small">
             <Button onClick={() => history.push(`${match.url}/edit`)}>Edit</Button>

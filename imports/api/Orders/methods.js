@@ -5,6 +5,7 @@ import { check, Match } from 'meteor/check';
 import Orders from './Orders';
 import handleMethodException from '../../modules/handle-method-exception';
 import rateLimit from '../../modules/rate-limit';
+import { Roles } from 'meteor/alanning:roles';
 
 Meteor.methods({
   'orders.findOne': function ordersFindOne(orderId) {
@@ -17,14 +18,15 @@ Meteor.methods({
     }
   },
   'orders.insert': function ordersInsert(doc) {
-    console.log(doc)
     check(doc, {
       location: String,
-      description: String,
+      description: String,      
     });
 
     try {
-      return Orders.insert({ owner: this.userId, ...doc });
+      const haveAValidName = Meteor.user() && Meteor.user().profile && Meteor.user().profile.name;
+      const ownerName = !haveAValidName ? '' : ( Meteor.user().profile.name.first + ' ' + Meteor.user().profile.name.last );
+      return Orders.insert({ owner: this.userId, ...doc, ownerName: ownerName });
     } catch (exception) {
       handleMethodException(exception);
     }
@@ -42,6 +44,28 @@ Meteor.methods({
 
       if (docToUpdate.owner === this.userId) {
         Orders.update(orderId, { $set: doc });
+        return orderId; // Return _id so we can redirect to order after update.
+      }
+
+      throw new Meteor.Error('403', 'Sorry, pup. You\'re not allowed to edit this order.');
+    } catch (exception) {
+      handleMethodException(exception);
+    }
+  },
+  'orders.deliver': function ordersUpdate(orderId) {
+    check(orderId, String);
+
+    try {
+
+      if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {
+        Orders.update({_id: orderId} , { $set: { delivered: true } }, function(error, count){
+          if (error) {
+              throw new Meteor.Error(500, error.message);
+          } else {
+              console.log(count + " Docs Update Successful");
+          }
+        // response
+        });
         return orderId; // Return _id so we can redirect to order after update.
       }
 

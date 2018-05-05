@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Table, Alert, Button } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -10,6 +10,8 @@ import OrdersCollection from '../../../api/Orders/Orders';
 import { timeago, monthDayYearAtTime } from '../../../modules/dates';
 import Loading from '../../components/Loading/Loading';
 import BlankState from '../../components/BlankState/BlankState';
+import OrdersList from '../../components/Orders/OrdersList';
+import { Roles } from 'meteor/alanning:roles';
 
 const StyledOrders = styled.div`
   table tbody tr td {
@@ -17,82 +19,65 @@ const StyledOrders = styled.div`
   }
 `;
 
-const handleRemove = (orderId) => {
-  if (confirm('Are you sure? This is permanent!')) {
-    Meteor.call('orders.remove', orderId, (error) => {
-      if (error) {
-        Bert.alert(error.reason, 'danger');
-      } else {
-        Bert.alert('Order deleted!', 'success');
-      }
-    });
-  }
-};
-
 const Orders = ({
-  loading, orders, match, history,
+  loading, ordersInProgress, oldOrders, match, history, blankIcon
 }) => (!loading ? (
   <StyledOrders>
     <div className="page-header clearfix">
-      <h4 className="pull-left">Orders</h4>
-      <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Order</Link>
+      <h4 className="pull-left">Orders In Progress</h4>
+      {
+        Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
+          ""
+        :
+          <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Order</Link>
+      }
+      
     </div>
-    {orders.length ?
-      <Table responsive>
-        <thead>
-          <tr>
-            <th>Location</th>
-            <th>Description</th>
-            <th>Created</th>
-            <th />
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map(({
-            _id, location, createdAt, description,
-          }) => (
-            <tr key={_id}>
-              <td>{location}</td>
-              <td>{description}</td>
-              <td>{timeago(createdAt)}</td>
-              <td>
-                <Button
-                  bsStyle="primary"
-                  onClick={() => history.push(`${match.url}/${_id}`)}
-                  block
-                >
-                  View
-                </Button>
-              </td>
-              <td>
-                <Button
-                  bsStyle="danger"
-                  onClick={() => handleRemove(_id)}
-                  block
-                >
-                  Delete
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table> : <BlankState
-        icon={{ style: 'solid', symbol: 'file-alt' }}
-        title="You're plum out of orders, friend!"
-        subtitle="Add your first order by clicking the button below."
-        action={{
-          style: 'success',
-          onClick: () => history.push(`${match.url}/new`),
-          label: 'Create Your First Order',
-        }}
-      />}
+    {
+      ordersInProgress.length ?
+          <OrdersList
+            orders={ordersInProgress}
+            showActionButtons={true}
+            history={history}
+            match={match}
+          />    
+       :          
+         Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
+          <BlankState
+            icon={{ style: 'solid', symbol: 'smile' }}
+            title="Wohoaaa, we have no more!"
+            subtitle="You can take some well deserved rest."            
+          />
+         :
+          <BlankState
+            icon={{ style: 'solid', symbol: 'utensils' }}
+            title="Yesss, it's snack time!"
+            subtitle="Let's fill your energy tanks up."
+            action={{
+              style: 'success',
+              onClick: () => history.push(`${match.url}/new`),
+              label: 'I need my snack',
+            }}
+          />
+    }     
+    <div className="page-header clearfix">
+      <h4 className="pull-left">Delivered Orders</h4>      
+    </div>
+    {     
+      <OrdersList
+        orders={oldOrders}
+        showActionButtons={false}
+        history={history}
+        match={match}
+      /> 
+    }
   </StyledOrders>
 ) : <Loading />);
 
 Orders.propTypes = {
   loading: PropTypes.bool.isRequired,
-  orders: PropTypes.arrayOf(PropTypes.object).isRequired,
+  ordersInProgress: PropTypes.arrayOf(PropTypes.object).isRequired,
+  oldOrders: PropTypes.arrayOf(PropTypes.object).isRequired,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
@@ -101,6 +86,7 @@ export default withTracker(() => {
   const subscription = Meteor.subscribe('orders');
   return {
     loading: !subscription.ready(),
-    orders: OrdersCollection.find().fetch(),
+    ordersInProgress: OrdersCollection.find({delivered:false}).fetch(),
+    oldOrders: OrdersCollection.find({delivered:true}).fetch(),
   };
 })(Orders);

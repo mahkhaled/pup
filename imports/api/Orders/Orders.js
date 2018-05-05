@@ -40,9 +40,20 @@ Orders.schema = new SimpleSchema({
     type: String,
     label: 'The location to deliver the Order.',
   },
+  delivered: {
+    type: Boolean,
+    label: 'Whether this order was delivered or not',
+    autoValue() {
+      if (this.isInsert) return false;
+    }
+  },
   description: {
     type: String,
     label: 'The description of the Order.',
+  },
+  ownerName: {
+    type: String,
+    label: 'The name of the order requester, cached for faster resolution and less code.',
   },
 });
 
