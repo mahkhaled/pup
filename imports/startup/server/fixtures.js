@@ -1,6 +1,31 @@
 import seeder from '@cleverbeagle/seeder';
 import { Meteor } from 'meteor/meteor';
 import Orders from '../../api/Orders/Orders';
+import MenuItems from '../../api/MenuItems/MenuItems'
+
+seeder(MenuItems, {
+  environments: ['development', 'staging'],
+  noLimit: true,
+  wipe: true,
+  data: [
+    {name: "Tea-Red (Lipton)"},
+    {name: "Tea-Green (Lipton)"},
+    {name: "Nescafe"},
+    {name: "Mint (Hot drink)"},
+    {name: "Galaxy - hazlenut"},
+    {name: "Galaxy - Dairy milk"},
+    {name: "Biscuits"},
+    {name: "Twinkies"},
+    {name: "Nutri-Fit"},
+    {name: "Lambada"},
+    {name: "Snickers"},
+    {name: "Chipsy (Cheese)"},
+    {name: "Lays (Cheese)"},
+    {name: "Green Salad"},
+    {name: "Pop Corn"},
+    {name: "Coffee"}, 
+  ],
+})
 
 const ordersSeed = userId => ({
   collection: Orders,
@@ -11,10 +36,12 @@ const ordersSeed = userId => ({
     return {
       owner: userId,
       location: `Location for order number : #${dataIndex + 1}`,
-      description: `This is the description of order #${dataIndex + 1}`,
+      comments: `This is the description of order #${dataIndex + 1}`,
+      menuItem: MenuItems.find().first,
     };
   },
 });
+
 
 seeder(Meteor.users, {
   environments: ['development', 'staging'],

@@ -51,7 +51,7 @@ const Orders = ({
         </thead>
         <tbody>
           {orders.map(({
-            _id, location, createdAt, description,
+            _id, location, createdAt, comments,
           }) => (
             <tr key={_id}>
               <td>{location}</td>

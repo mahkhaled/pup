@@ -26,8 +26,8 @@ const handleRemove = (orderId, history) => {
 const renderOrder = (doc, match, history) => (doc ? (
   <div className="ViewOrder">
     <SEO
-      title={doc.title}
-      description={doc.body}
+      title={doc.comments}
+      description={doc.comments}
       url={`orders/${doc._id}`}
       contentType="article"
       published={doc.createdAt}
@@ -35,7 +35,9 @@ const renderOrder = (doc, match, history) => (doc ? (
       twitter="clvrbgl"
     />
     <div className="page-header clearfix">
-      <h4 className="pull-left">{ doc && doc.description }</h4>
+      <h4 className="pull-left">
+        { doc && doc.menuItem }            
+      </h4>
       {Meteor.isClient && doc.owner == Meteor.userId() && !doc.delivered ? (
         <ButtonToolbar className="pull-right">
           <ButtonGroup bsSize="small">
@@ -50,6 +52,10 @@ const renderOrder = (doc, match, history) => (doc ? (
     { doc.ownerName }
     { " - " }
     { doc && doc.location }
+    <br/>
+    <br/>
+    <b>comments : </b>
+    { doc && doc.comments }
   </div>
 ) : <NotFound />);
 

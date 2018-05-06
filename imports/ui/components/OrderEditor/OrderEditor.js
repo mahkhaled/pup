@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup, ControlLabel, Button } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, Button, DropdownButton, MenuItem } from 'react-bootstrap';
 import { Meteor } from 'meteor/meteor';
 import { Bert } from 'meteor/themeteorchef:bert';
 import validate from '../../../modules/validate';
@@ -15,20 +15,27 @@ class OrderEditor extends React.Component {
         location: {
           required: true,
         },
-        description: {
-          required: true,
+        comments: {
+          required: false,
         },
+        menuItem: {
+          required: true,
+        }
       },
       messages: {
         location: {
           required: 'Hey, telepathy will not work here, we need to know where the hell are you hiding.',
-        },
-        description: {
-          required: "Well, I'm not your Mom! you need to say what you want exactly !!",
-        },
+        },        
+        menuItem: {
+          required: "You have to choose an item",
+        }
       },
       submitHandler() { component.handleSubmit(component.form); },
     });
+
+    this.state = {
+      selectedMenuItem: '',
+    }
   }
 
   handleSubmit(form) {
@@ -37,7 +44,8 @@ class OrderEditor extends React.Component {
     const methodToCall = existingOrder ? 'orders.update' : 'orders.insert';
     const doc = {
       location: form.location.value.trim(),
-      description: form.description.value.trim(),
+      comments: form.comments.value.trim(),
+      menuItem: form.menuItem.value,
     };
 
     if (existingOrder) doc._id = existingOrder;
@@ -54,19 +62,30 @@ class OrderEditor extends React.Component {
     });
   }
 
+  renderMenuItemsDropdown(menuItems, doc) {
+    return (      
+      <select 
+          name="menuItem" 
+          className="form-control"            
+          placeholder="select">
+        { 
+          menuItems.map(item => (
+            <option key={item._id} value={item.name} selected={doc.menuItem == item.name}>{item.name}</option>
+          )) 
+        }
+      </select>      
+    );
+  }
+
   render() {
-    const { doc } = this.props;
-    return (
-      <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}>        
+    const { doc, items } = this.props;
+    return (      
+      <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}> 
         <FormGroup>
-          <ControlLabel>Description</ControlLabel>
-          <textarea
-            className="form-control"
-            name="description"
-            defaultValue={doc && doc.description}
-            placeholder="Tell me exactly what you want . We won't take 'Ay 7aga' as an answer ! "
-          />
-        </FormGroup>
+          <ControlLabel>Select Item : </ControlLabel>          
+          {this.renderMenuItemsDropdown(items, doc)}                     
+        </FormGroup>        
+
         <FormGroup>
           <ControlLabel>Location</ControlLabel>
           <input
@@ -75,6 +94,15 @@ class OrderEditor extends React.Component {
             name="location"
             defaultValue={doc && doc.location}
             placeholder="Where the hell are you hiding ?!"
+          />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Comments</ControlLabel>
+          <textarea
+            className="form-control"
+            name="comments"
+            defaultValue={doc && doc.comments}
+            placeholder="Any special orders ?! talabat seyadtak awamer !"
           />
         </FormGroup>
         <Button type="submit" bsStyle="success">
@@ -86,12 +114,14 @@ class OrderEditor extends React.Component {
 }
 
 OrderEditor.defaultProps = {
-  doc: { location: '', description: '' },
+  doc: { location: '', comments: '', menuItem: ''}, 
+  items: [] 
 };
 
 OrderEditor.propTypes = {
   doc: PropTypes.object,
   history: PropTypes.object.isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default OrderEditor;

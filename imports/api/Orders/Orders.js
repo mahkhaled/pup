@@ -47,9 +47,13 @@ Orders.schema = new SimpleSchema({
       if (this.isInsert) return false;
     }
   },
-  description: {
+  comments: {
     type: String,
-    label: 'The description of the Order.',
+    label: 'The comments on the Order.',
+  },
+  menuItem: {
+    type: String,
+    label: 'The item choosen for the order'
   },
   ownerName: {
     type: String,

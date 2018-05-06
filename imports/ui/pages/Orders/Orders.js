@@ -21,58 +21,60 @@ const StyledOrders = styled.div`
 
 const Orders = ({
   loading, ordersInProgress, oldOrders, match, history, blankIcon
-}) => (!loading ? (
-  <StyledOrders>
-    <div className="page-header clearfix">
-      <h4 className="pull-left">Orders In Progress</h4>
+}) => {
+  return (!loading ? (
+    <StyledOrders>      
+      <div className="page-header clearfix">
+        <h4 className="pull-left">Orders In Progress</h4>
+        {
+          Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
+            ""
+          :
+            <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Order</Link>
+        }
+        
+      </div>
       {
-        Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
-          ""
-        :
-          <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Order</Link>
+        ordersInProgress.length ?
+            <OrdersList
+              orders={ordersInProgress}
+              showActionButtons={true}
+              history={history}
+              match={match}
+            />    
+         :          
+           Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
+            <BlankState
+              icon={{ style: 'solid', symbol: 'smile' }}
+              title="Wohoaaa, we have no more!"
+              subtitle="You can take some well deserved rest."            
+            />
+           :
+            <BlankState
+              icon={{ style: 'solid', symbol: 'utensils' }}
+              title="Yesss, it's snack time!"
+              subtitle="Let's fill your energy tanks up."
+              action={{
+                style: 'success',
+                onClick: () => history.push(`${match.url}/new`),
+                label: 'I need my snack',
+              }}
+            />
+      }     
+      <div className="page-header clearfix">
+        <h4 className="pull-left">Delivered Orders</h4>      
+      </div>
+      {     
+        <OrdersList
+          orders={oldOrders}
+          showActionButtons={false}
+          history={history}
+          match={match}
+        /> 
       }
-      
-    </div>
-    {
-      ordersInProgress.length ?
-          <OrdersList
-            orders={ordersInProgress}
-            showActionButtons={true}
-            history={history}
-            match={match}
-          />    
-       :          
-         Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
-          <BlankState
-            icon={{ style: 'solid', symbol: 'smile' }}
-            title="Wohoaaa, we have no more!"
-            subtitle="You can take some well deserved rest."            
-          />
-         :
-          <BlankState
-            icon={{ style: 'solid', symbol: 'utensils' }}
-            title="Yesss, it's snack time!"
-            subtitle="Let's fill your energy tanks up."
-            action={{
-              style: 'success',
-              onClick: () => history.push(`${match.url}/new`),
-              label: 'I need my snack',
-            }}
-          />
-    }     
-    <div className="page-header clearfix">
-      <h4 className="pull-left">Delivered Orders</h4>      
-    </div>
-    {     
-      <OrdersList
-        orders={oldOrders}
-        showActionButtons={false}
-        history={history}
-        match={match}
-      /> 
-    }
-  </StyledOrders>
-) : <Loading />);
+    </StyledOrders>
+  ) : <Loading />);
+}
 
 Orders.propTypes = {
   loading: PropTypes.bool.isRequired,
@@ -83,10 +85,10 @@ Orders.propTypes = {
 };
 
 export default withTracker(() => {
-  const subscription = Meteor.subscribe('orders');
+  const subscription = Meteor.subscribe('orders');  
   return {
     loading: !subscription.ready(),
     ordersInProgress: OrdersCollection.find({delivered:false}).fetch(),
-    oldOrders: OrdersCollection.find({delivered:true}).fetch(),
+    oldOrders: OrdersCollection.find({delivered:true}).fetch(),    
   };
 })(Orders);

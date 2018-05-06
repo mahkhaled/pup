@@ -46,7 +46,7 @@ const OrdersList = ({
             ''
         }
         </th>
-        <th>Description</th>
+        <th>Order</th>
         <th>Created</th>
         <th />
         <th />
@@ -54,7 +54,7 @@ const OrdersList = ({
     </thead>
     <tbody>
       {orders.map(({
-        _id, location, ownerName, delivered, createdAt, description,
+        _id, location, ownerName, delivered, createdAt, comments, menuItem
       }) => (
         <tr key={_id}>
           <td>{location}</td>
@@ -66,7 +66,7 @@ const OrdersList = ({
               ''
           }
           </td>
-          <td>{description}</td>
+          <td>{menuItem}</td>
           <td>{timeago(createdAt)}</td>
           <td>
             <Button

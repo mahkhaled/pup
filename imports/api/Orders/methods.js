@@ -20,7 +20,8 @@ Meteor.methods({
   'orders.insert': function ordersInsert(doc) {
     check(doc, {
       location: String,
-      description: String,      
+      comments: String,      
+      menuItem: String,
     });
 
     try {
@@ -35,7 +36,8 @@ Meteor.methods({
     check(doc, {
       _id: String,
       location: String,
-      description: String,
+      comments: String,
+      menuItem: String,
     });
 
     try {
