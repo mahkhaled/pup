@@ -69,8 +69,6 @@ db.users.update(
 
 - AND, you're ready to start BADR Intern's Day 2018 challenges. Get ready to have some fun !
 
-> Note : We'll provide a Virtual Machine, on the Hackathon Day, for those who didn't complete the above steps before they arrive @ BADR. But if you prefer to use your machine/OS, rather than the provided Virtual Machine, it's recommended that you follow the above steps before you arrive @ BADR, since they will take some time to finish.
-
 ---
 
 Need help or questions ? contact us : hr@badrit.com
