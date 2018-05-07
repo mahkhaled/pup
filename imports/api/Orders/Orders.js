@@ -36,6 +36,11 @@ Orders.schema = new SimpleSchema({
       if (this.isInsert || this.isUpdate) return (new Date()).toISOString();
     },
   },
+  deliveredAt: {
+    type: String,
+    optional: true,
+    label: 'The date this Order was delivered.',    
+  },
   location: {
     type: String,
     label: 'The location to deliver the Order.',
@@ -49,6 +54,7 @@ Orders.schema = new SimpleSchema({
   },
   comments: {
     type: String,
+    optional: true,
     label: 'The comments on the Order.',
   },
   menuItem: {

@@ -41,6 +41,7 @@ const Orders = ({
               showActionButtons={true}
               history={history}
               match={match}
+              showDeliveredDate={false}
             />    
          :          
            Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
@@ -70,6 +71,7 @@ const Orders = ({
           showActionButtons={false}
           history={history}
           match={match}
+          showDeliveredDate={true}
         /> 
       }
     </StyledOrders>

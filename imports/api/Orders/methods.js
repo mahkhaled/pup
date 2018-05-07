@@ -6,6 +6,7 @@ import Orders from './Orders';
 import handleMethodException from '../../modules/handle-method-exception';
 import rateLimit from '../../modules/rate-limit';
 import { Roles } from 'meteor/alanning:roles';
+import moment from 'moment';
 
 Meteor.methods({
   'orders.findOne': function ordersFindOne(orderId) {
@@ -27,7 +28,11 @@ Meteor.methods({
     try {
       const haveAValidName = Meteor.user() && Meteor.user().profile && Meteor.user().profile.name;
       const ownerName = !haveAValidName ? '' : ( Meteor.user().profile.name.first + ' ' + Meteor.user().profile.name.last );
-      return Orders.insert({ owner: this.userId, ...doc, ownerName: ownerName });
+      return Orders.insert({ 
+        owner: this.userId, 
+        ...doc, 
+        ownerName: ownerName 
+      });
     } catch (exception) {
       handleMethodException(exception);
     }
@@ -60,7 +65,14 @@ Meteor.methods({
     try {
 
       if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {
-        Orders.update({_id: orderId} , { $set: { delivered: true } });
+        console.log(moment().toDate())
+        Orders.update({_id: orderId} , 
+          { 
+            $set: { 
+              delivered: true,
+              deliveredAt: moment().format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+            } 
+          });
         return orderId; // Return _id so we can redirect to order after update.
       }
 

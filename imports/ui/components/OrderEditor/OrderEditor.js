@@ -97,7 +97,7 @@ class OrderEditor extends React.Component {
           />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>Comments</ControlLabel>
+          <ControlLabel>Comments (Optional)</ControlLabel>
           <textarea
             className="form-control"
             name="comments"

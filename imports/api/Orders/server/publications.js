@@ -5,9 +5,9 @@ import { Roles } from 'meteor/alanning:roles';
 
 Meteor.publish('orders', function orders() {
   if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {
-    return Orders.find({}, { sort : { createdAt: 1 }});
+    return Orders.find({}, { sort : { createdAt: -1 }});
   } else {
-    return Orders.find({ owner: this.userId }, { sort : { createdAt: 1 }});
+    return Orders.find({ owner: this.userId }, { sort : { createdAt: -1 }});
   }
 });
 

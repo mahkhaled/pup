@@ -32,7 +32,7 @@ const handleDelivered = (orderId) => {
 };
 
 const OrdersList = ({
-  orders, showActionButtons, match, history
+  orders, showActionButtons, match, history, showDeliveredDate
 }) => (
   <Table responsive>
     <thead>
@@ -48,13 +48,19 @@ const OrdersList = ({
         </th>
         <th>Order</th>
         <th>Created</th>
+        {
+          showDeliveredDate ?
+            <th>Delivered</th>
+          :
+            <th></th>
+        }
         <th />
         <th />
       </tr>
     </thead>
     <tbody>
       {orders.map(({
-        _id, location, ownerName, delivered, createdAt, comments, menuItem
+        _id, location, ownerName, delivered, createdAt, deliveredAt, comments, menuItem
       }) => (
         <tr key={_id}>
           <td>{location}</td>
@@ -68,6 +74,12 @@ const OrdersList = ({
           </td>
           <td>{menuItem}</td>
           <td>{timeago(createdAt)}</td>
+          {
+            showDeliveredDate && deliveredAt ?
+              <td>{timeago(deliveredAt)}</td>
+            :
+              <td></td>
+          }
           <td>
             <Button
               bsStyle="primary"
@@ -109,13 +121,14 @@ const OrdersList = ({
 OrdersList.defaultProps = {
   orders: [],  
   showActionButtons: true,
-  match: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 OrdersList.propTypes = {
   orders: PropTypes.arrayOf(PropTypes.object),
   showActionButtons: PropTypes.bool.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  showDeliveredDate: PropTypes.bool.isRequired,
 };
 
 export default OrdersList;
