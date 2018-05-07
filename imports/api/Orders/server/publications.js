@@ -2,12 +2,31 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import Orders from '../Orders';
 import { Roles } from 'meteor/alanning:roles';
+import moment from 'moment'
 
 Meteor.publish('orders', function orders() {
-  if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {
-    return Orders.find({}, { sort : { createdAt: -1 }});
+  const queryConditions = {
+    createdAt: {
+      $gt : moment().subtract(1, 'days').format('x')
+    }
+  }
+  const querySorting = { 
+    sort : { createdAt: -1 }
+  }
+
+  if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {    
+    return Orders.find({
+        ...queryConditions
+      },
+      querySorting
+    );
   } else {
-    return Orders.find({ owner: this.userId }, { sort : { createdAt: -1 }});
+    return Orders.find({ 
+        ...queryConditions,
+        owner: this.userId 
+      }, 
+      querySorting
+    );
   }
 });
 

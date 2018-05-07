@@ -31,7 +31,8 @@ Meteor.methods({
       return Orders.insert({ 
         owner: this.userId, 
         ...doc, 
-        ownerName: ownerName 
+        ownerName: ownerName,
+        creationTimeStamp: moment().format('x'),
       });
     } catch (exception) {
       handleMethodException(exception);

@@ -52,6 +52,10 @@ Orders.schema = new SimpleSchema({
       if (this.isInsert) return false;
     }
   },
+  creationTimeStamp: {
+    type: String,
+    label: 'Timestamp for createdAt',
+  },
   comments: {
     type: String,
     optional: true,
