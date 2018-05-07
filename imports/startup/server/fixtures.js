@@ -59,6 +59,26 @@ seeder(Meteor.users, {
     data(userId) {
       return ordersSeed(userId);
     },
+  },{
+    email: 'officeboy1@gmail.com',
+    password: '123456',
+    profile: {
+      name: {
+        first: 'Office',
+        last: 'Boy1',
+      },
+    },
+    roles: ['office-boy']
+  },{
+    email: 'officeboy2@gmail.com',
+    password: '123456',
+    profile: {
+      name: {
+        first: 'Office',
+        last: 'Boy2',
+      },
+    },
+    roles: ['office-boy']
   }],
   modelCount: 5,
   model(index, faker) {
