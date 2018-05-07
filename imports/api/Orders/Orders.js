@@ -47,12 +47,9 @@ Orders.schema = new SimpleSchema({
   },
   delivered: {
     type: Boolean,
-    label: 'Whether this order was delivered or not',
-    autoValue() {
-      if (this.isInsert) return false;
-    }
+    label: 'Whether this order was delivered or not',    
   },
-  creationTimeStamp: {
+  creationTimestamp: {
     type: String,
     label: 'Timestamp for createdAt',
   },

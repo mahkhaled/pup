@@ -1,7 +1,11 @@
 import seeder from '@cleverbeagle/seeder';
 import { Meteor } from 'meteor/meteor';
 import Orders from '../../api/Orders/Orders';
-import MenuItems from '../../api/MenuItems/MenuItems'
+import MenuItems from '../../api/MenuItems/MenuItems';
+import SampleHistoricalOrders from './hackathon_orderes_data.json';
+import moment from 'moment';
+
+const allPlaces = ["1st Floor, Hall", "1st Floor, Room 1", "1st Floor, Room 3", "1st Floor, Meeting Room", "4th Floor, Comfy zone"];
 
 seeder(MenuItems, {
   environments: ['development', 'staging'],
@@ -27,19 +31,29 @@ seeder(MenuItems, {
   ],
 })
 
+const selectRandomLocation = () => {
+  const index = Math.floor(Math.random() * allPlaces.length);
+  return allPlaces[index];
+}
+
+const getSampleOrders = userId => {
+  return SampleHistoricalOrders.orders.map(sampleOrder => ({
+    owner: userId,
+    deliveredTimestamp: moment(sampleOrder.delivered_at, 'YYYY-MM-DD HH:mm:ss Z').format('x'),    
+    location: selectRandomLocation(),
+    delivered: true,
+    creationTimestamp: moment(sampleOrder.created_at, 'YYYY-MM-DD HH:mm:ss Z').format('x'),
+    comments: 'n/a',
+    menuItem: sampleOrder.item,
+    ownerName: 'Agent 1',
+  }))
+}
+
 const ordersSeed = userId => ({
   collection: Orders,
   environments: ['development', 'staging'],
-  noLimit: true,
-  modelCount: 5,
-  model(dataIndex) {
-    return {
-      owner: userId,
-      location: `Location for order number : #${dataIndex + 1}`,
-      comments: `This is the description of order #${dataIndex + 1}`,
-      menuItem: MenuItems.find().first,
-    };
-  },
+  noLimit: false,
+  data: getSampleOrders(userId),
 });
 
 
@@ -47,7 +61,7 @@ seeder(Meteor.users, {
   environments: ['development', 'staging'],
   noLimit: true,
   data: [{
-    email: 'admin@admin.com',
+    email: 'admin@c.o',
     password: 'password',
     profile: {
       name: {
@@ -55,12 +69,32 @@ seeder(Meteor.users, {
         last: 'Warhol',
       },
     },
-    roles: ['admin'],
+    roles: ['admin']
+  },{
+    email: 'user1@c.o',
+    password: '123456',
+    profile: {
+      name: {
+        first: 'Sample',
+        last: 'User 1',
+      },
+    },
+    roles: [],
     data(userId) {
       return ordersSeed(userId);
     },
   },{
-    email: 'officeboy1@gmail.com',
+    email: 'user2@c.o',
+    password: '123456',
+    profile: {
+      name: {
+        first: 'Sample',
+        last: 'User 2',
+      },
+    },
+    roles: [],
+  },{
+    email: 'officeboy1@c.o',
     password: '123456',
     profile: {
       name: {
@@ -68,9 +102,9 @@ seeder(Meteor.users, {
         last: 'Boy1',
       },
     },
-    roles: ['office-boy']
+    roles: ['office-boy'],
   },{
-    email: 'officeboy2@gmail.com',
+    email: 'officeboy2@c.o',
     password: '123456',
     profile: {
       name: {
@@ -80,7 +114,7 @@ seeder(Meteor.users, {
     },
     roles: ['office-boy']
   }],
-  modelCount: 5,
+  /*modelCount: 5,
   model(index, faker) {
     const userCount = index + 1;
     return {
@@ -97,5 +131,5 @@ seeder(Meteor.users, {
         return ordersSeed(userId);
       },
     };
-  },
+  },*/
 });

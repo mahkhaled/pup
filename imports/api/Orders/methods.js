@@ -32,7 +32,8 @@ Meteor.methods({
         owner: this.userId, 
         ...doc, 
         ownerName: ownerName,
-        creationTimeStamp: moment().format('x'),
+        delivered: false,
+        creationTimestamp: moment().format('x'),
       });
     } catch (exception) {
       handleMethodException(exception);

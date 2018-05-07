@@ -6,12 +6,12 @@ import moment from 'moment'
 
 Meteor.publish('orders', function orders() {
   const queryConditions = {
-    createdAt: {
-      $gt : moment().subtract(1, 'days').format('x')
+    creationTimestamp: {
+      $gt : moment().subtract(7, 'days').format('x')
     }
   }
   const querySorting = { 
-    sort : { createdAt: -1 }
+    sort : { creationTimestamp: -1 }
   }
 
   if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {    
