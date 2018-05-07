@@ -60,7 +60,7 @@ const OrdersList = ({
     </thead>
     <tbody>
       {orders.map(({
-        _id, location, ownerName, delivered, createdAt, deliveredAt, comments, menuItem
+        _id, location, ownerName, delivered, createdAt, deliveredTimestamp, comments, menuItem
       }) => (
         <tr key={_id}>
           <td>{location}</td>
@@ -75,8 +75,8 @@ const OrdersList = ({
           <td>{menuItem}</td>
           <td>{timeago(createdAt)}</td>
           {
-            showDeliveredDate && deliveredAt ?
-              <td>{timeago(deliveredAt)}</td>
+            showDeliveredDate && deliveredTimestamp ?
+              <td>{timeago(parseInt(deliveredTimestamp))}</td>
             :
               <td></td>
           }

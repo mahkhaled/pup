@@ -36,10 +36,10 @@ Orders.schema = new SimpleSchema({
       if (this.isInsert || this.isUpdate) return (new Date()).toISOString();
     },
   },
-  deliveredAt: {
+  deliveredTimestamp: {
     type: String,
     optional: true,
-    label: 'The date this Order was delivered.',    
+    label: 'The timestamp this Order was delivered.',    
   },
   location: {
     type: String,

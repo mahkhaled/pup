@@ -66,12 +66,11 @@ Meteor.methods({
     try {
 
       if ( Roles.userIsInRole(this.userId, ['office-boy']) ) {
-        console.log(moment().toDate())
         Orders.update({_id: orderId} , 
           { 
             $set: { 
               delivered: true,
-              deliveredAt: moment().format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+              deliveredTimestamp: moment().format('x'),
             } 
           });
         return orderId; // Return _id so we can redirect to order after update.
