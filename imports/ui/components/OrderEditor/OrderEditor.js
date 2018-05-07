@@ -78,23 +78,31 @@ class OrderEditor extends React.Component {
   }
 
   render() {
-    const { doc, items } = this.props;
+    const { doc, items, locations } = this.props;
     return (      
       <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}> 
         <FormGroup>
           <ControlLabel>Select Item : </ControlLabel>          
           {this.renderMenuItemsDropdown(items, doc)}                     
         </FormGroup>        
-
         <FormGroup>
-          <ControlLabel>Location</ControlLabel>
-          <input
-            type="text"
-            className="form-control"
-            name="location"
-            defaultValue={doc && doc.location}
-            placeholder="Where the hell are you hiding ?!"
-          />
+          <ControlLabel>Working Location</ControlLabel>
+          <select 
+              name="location" 
+              className="form-control"            
+              placeholder="select">
+            { 
+              locations.map(item => (
+                <option 
+                    key={item._id} 
+                    value={item._id}>
+                
+                  {item.name}
+
+                </option>
+              )) 
+            }
+          </select>
         </FormGroup>
         <FormGroup>
           <ControlLabel>Comments (Optional)</ControlLabel>
@@ -115,13 +123,15 @@ class OrderEditor extends React.Component {
 
 OrderEditor.defaultProps = {
   doc: { location: '', comments: '', menuItem: ''}, 
-  items: [] 
+  items: [],
+  locations: [],
 };
 
 OrderEditor.propTypes = {
   doc: PropTypes.object,
   history: PropTypes.object.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default OrderEditor;

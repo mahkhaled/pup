@@ -45,6 +45,10 @@ Orders.schema = new SimpleSchema({
     type: String,
     label: 'The location to deliver the Order.',
   },
+  locationName: {
+    type: String,
+    label: 'The name of the location to deliver the Order.',
+  },
   delivered: {
     type: Boolean,
     label: 'Whether this order was delivered or not',    

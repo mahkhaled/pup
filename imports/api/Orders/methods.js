@@ -3,6 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check, Match } from 'meteor/check';
 import Orders from './Orders';
+import Locations from '../Locations/Locations'
 import handleMethodException from '../../modules/handle-method-exception';
 import rateLimit from '../../modules/rate-limit';
 import { Roles } from 'meteor/alanning:roles';
@@ -26,14 +27,16 @@ Meteor.methods({
     });
 
     try {
+      const locationName = Locations.findOne({_id: doc.location}).name
       const haveAValidName = Meteor.user() && Meteor.user().profile && Meteor.user().profile.name;
       const ownerName = !haveAValidName ? '' : ( Meteor.user().profile.name.first + ' ' + Meteor.user().profile.name.last );
       return Orders.insert({ 
         owner: this.userId, 
         ...doc, 
-        ownerName: ownerName,
+        ownerName,
         delivered: false,
         creationTimestamp: moment().format('x'),
+        locationName,
       });
     } catch (exception) {
       handleMethodException(exception);
@@ -48,11 +51,19 @@ Meteor.methods({
     });
 
     try {
+      const locationName = Locations.findOne({_id: doc.location})
       const orderId = doc._id;
       const docToUpdate = Orders.findOne(orderId, { fields: { owner: 1 } });
 
-      if (docToUpdate.owner === this.userId) {
-        Orders.update(orderId, { $set: doc });
+      if (docToUpdate.owner === this.userId) {        
+        Orders.update(orderId, 
+          { 
+            $set: {
+              ...doc,
+              locationName,
+            }
+          }
+        );
         return orderId; // Return _id so we can redirect to order after update.
       }
 

@@ -2,10 +2,20 @@ import seeder from '@cleverbeagle/seeder';
 import { Meteor } from 'meteor/meteor';
 import Orders from '../../api/Orders/Orders';
 import MenuItems from '../../api/MenuItems/MenuItems';
+import Locations from '../../api/Locations/Locations';
 import SampleHistoricalOrders from './hackathon_orderes_data.json';
 import moment from 'moment';
 
 const allPlaces = ["1st Floor, Hall", "1st Floor, Room 1", "1st Floor, Room 3", "1st Floor, Meeting Room", "4th Floor, Comfy zone"];
+
+seeder(Locations, {
+  environments: ['development', 'staging'],
+  noLimit: true,
+  wipe: true,
+  data: allPlaces.map(placeName => ({
+    name: placeName,
+  })),
+})
 
 seeder(MenuItems, {
   environments: ['development', 'staging'],
@@ -31,9 +41,11 @@ seeder(MenuItems, {
   ],
 })
 
-const selectRandomLocation = () => {
-  const index = Math.floor(Math.random() * allPlaces.length);
-  return allPlaces[index];
+const selectLocation = (userId) => {
+  const sum = userId.split('').reduce((a, c) => a + c.charCodeAt(0), 0)
+  const locations = Locations.find().fetch()
+  const index = (sum % locations.length);
+  return locations[index];
 }
 
 const getSampleOrders = (userId, index) => {
@@ -42,7 +54,8 @@ const getSampleOrders = (userId, index) => {
     .map(sampleOrder => ({
       owner: userId,
       deliveredTimestamp: moment(sampleOrder.delivered_at, 'YYYY-MM-DD HH:mm:ss Z').format('x'),    
-      location: selectRandomLocation(),
+      location: selectLocation(userId)._id,
+      locationName: selectLocation(userId).name,
       delivered: true,
       creationTimestamp: moment(sampleOrder.created_at, 'YYYY-MM-DD HH:mm:ss Z').format('x'),
       comments: 'n/a',
@@ -75,7 +88,7 @@ seeder(Meteor.users, {
   },
   {
     email: 'officeboy1@c.o',
-    password: '123456',
+    password: '1234',
     profile: {
       name: {
         first: 'Office',
@@ -85,7 +98,7 @@ seeder(Meteor.users, {
     roles: ['office-boy'],
   },{
     email: 'officeboy2@c.o',
-    password: '123456',
+    password: '1234',
     profile: {
       name: {
         first: 'Office',

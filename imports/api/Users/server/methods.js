@@ -27,6 +27,7 @@ Meteor.methods({
           first: String,
           last: String,
         },
+        defaultLocation: String,
       },
     });
 

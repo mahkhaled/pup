@@ -51,7 +51,7 @@ const renderOrder = (doc, match, history) => (doc ? (
     </div>
     { doc.ownerName }
     { " - " }
-    { doc && doc.location }
+    { doc && doc.locationName }
     <br/>
     <br/>
     <b>comments : </b>

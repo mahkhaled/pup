@@ -60,10 +60,10 @@ const OrdersList = ({
     </thead>
     <tbody>
       {orders.map(({
-        _id, location, ownerName, delivered, createdAt, creationTimestamp, deliveredTimestamp, comments, menuItem
+        _id, location, ownerName, delivered, createdAt, creationTimestamp, deliveredTimestamp, comments, menuItem, locationName
       }) => (
         <tr key={_id}>
-          <td>{location}</td>
+          <td>{locationName}</td>
           <td>
           {
             Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?

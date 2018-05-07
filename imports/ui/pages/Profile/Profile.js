@@ -15,6 +15,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import InputHint from '../../components/InputHint/InputHint';
 import AccountPageFooter from '../../components/AccountPageFooter/AccountPageFooter';
 import validate from '../../../modules/validate';
+import Locations from '../../../api/Locations/Locations';
 
 const StyledProfile = styled.div`
   .LoggedInWith {
@@ -159,6 +160,7 @@ class Profile extends React.Component {
           first: form.firstName.value,
           last: form.lastName.value,
         },
+        defaultLocation: form.defaultLocation.value,
       },
     };
 
@@ -182,7 +184,7 @@ class Profile extends React.Component {
     }
   }
 
-  renderOAuthUser(loading, user) {
+  renderOAuthUser(loading, user, locations) {
     return !loading ? (
       <div className="OAuthProfile">
         {Object.keys(user.services).map(service => (
@@ -205,7 +207,7 @@ class Profile extends React.Component {
       </div>) : <div />;
   }
 
-  renderPasswordUser(loading, user) {
+  renderPasswordUser(loading, user, locations) {
     return !loading ? (
       <div>
         <Row>
@@ -232,6 +234,26 @@ class Profile extends React.Component {
             </FormGroup>
           </Col>
         </Row>
+        <FormGroup>
+          <ControlLabel>Working Location</ControlLabel>
+          <select 
+              name="defaultLocation" 
+              className="form-control"            
+              placeholder="select">
+            { 
+              locations.map(item => (
+                <option 
+                    key={item._id} 
+                    value={item._id} 
+                    selected={user.profile.defaultLocation == item._id}>
+                
+                  {item.name}
+
+                </option>
+              )) 
+            }
+          </select>
+        </FormGroup>
         <FormGroup>
           <ControlLabel>Email Address</ControlLabel>
           <input
@@ -263,22 +285,22 @@ class Profile extends React.Component {
     ) : <div />;
   }
 
-  renderProfileForm(loading, user) {
+  renderProfileForm(loading, user, locations) {
     return !loading ? ({
       password: this.renderPasswordUser,
       oauth: this.renderOAuthUser,
-    }[this.getUserType(user)])(loading, user) : <div />;
+    }[this.getUserType(user)])(loading, user, locations) : <div />;
   }
 
   render() {
-    const { loading, user } = this.props;
+    const { loading, user, locations } = this.props;    
     return (
       <StyledProfile>
         <Row>
           <Col xs={12} sm={6} md={4}>
             <h4 className="page-header">Edit Profile</h4>
             <form ref={form => (this.form = form)} onSubmit={event => event.preventDefault()}>
-              {this.renderProfileForm(loading, user)}
+              {this.renderProfileForm(loading, user, locations)}
             </form>
             {/*
               <AccountPageFooter>
@@ -298,13 +320,16 @@ class Profile extends React.Component {
 Profile.propTypes = {
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
+  locations: PropTypes.array,
 };
 
 export default withTracker(() => {
   const subscription = Meteor.subscribe('users.editProfile');
+  const locations = Meteor.subscribe('locations');
 
   return {
     loading: !subscription.ready(),
     user: Meteor.user(),
+    locations: Locations.find().fetch(),
   };
 })(Profile);

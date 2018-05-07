@@ -54,7 +54,7 @@ const Orders = ({
             <BlankState
               icon={{ style: 'solid', symbol: 'utensils' }}
               title="Yesss, it's snack time!"
-              subtitle="Let's fill your energy tanks up."
+              subtitle="Let's fill up your energy tanks"
               action={{
                 style: 'success',
                 onClick: () => history.push(`${match.url}/new`),
