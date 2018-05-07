@@ -36,24 +36,26 @@ const selectRandomLocation = () => {
   return allPlaces[index];
 }
 
-const getSampleOrders = userId => {
-  return SampleHistoricalOrders.orders.map(sampleOrder => ({
-    owner: userId,
-    deliveredTimestamp: moment(sampleOrder.delivered_at, 'YYYY-MM-DD HH:mm:ss Z').format('x'),    
-    location: selectRandomLocation(),
-    delivered: true,
-    creationTimestamp: moment(sampleOrder.created_at, 'YYYY-MM-DD HH:mm:ss Z').format('x'),
-    comments: 'n/a',
-    menuItem: sampleOrder.item,
-    ownerName: 'Agent 1',
-  }))
+const getSampleOrders = (userId, index) => {
+  return SampleHistoricalOrders.orders
+    .filter(sampleOrder => `Agent ${index+1}` == sampleOrder.agent)
+    .map(sampleOrder => ({
+      owner: userId,
+      deliveredTimestamp: moment(sampleOrder.delivered_at, 'YYYY-MM-DD HH:mm:ss Z').format('x'),    
+      location: selectRandomLocation(),
+      delivered: true,
+      creationTimestamp: moment(sampleOrder.created_at, 'YYYY-MM-DD HH:mm:ss Z').format('x'),
+      comments: 'n/a',
+      menuItem: sampleOrder.item,
+      ownerName: sampleOrder.agent,
+    }))
 }
 
-const ordersSeed = userId => ({
+const ordersSeed = (userId, index) => ({
   collection: Orders,
   environments: ['development', 'staging'],
-  noLimit: false,
-  data: getSampleOrders(userId),
+  noLimit: true,
+  data: getSampleOrders(userId, index),
 });
 
 
@@ -62,7 +64,7 @@ seeder(Meteor.users, {
   noLimit: true,
   data: [{
     email: 'admin@c.o',
-    password: 'password',
+    password: '1234',
     profile: {
       name: {
         first: 'Andy',
@@ -70,30 +72,8 @@ seeder(Meteor.users, {
       },
     },
     roles: ['admin']
-  },{
-    email: 'user1@c.o',
-    password: '123456',
-    profile: {
-      name: {
-        first: 'Sample',
-        last: 'User 1',
-      },
-    },
-    roles: [],
-    data(userId) {
-      return ordersSeed(userId);
-    },
-  },{
-    email: 'user2@c.o',
-    password: '123456',
-    profile: {
-      name: {
-        first: 'Sample',
-        last: 'User 2',
-      },
-    },
-    roles: [],
-  },{
+  },
+  {
     email: 'officeboy1@c.o',
     password: '123456',
     profile: {
@@ -114,22 +94,22 @@ seeder(Meteor.users, {
     },
     roles: ['office-boy']
   }],
-  /*modelCount: 5,
+  modelCount: 50,
   model(index, faker) {
     const userCount = index + 1;
     return {
-      email: `user+${userCount}@test.com`,
-      password: 'password',
+      email: `user${userCount}@c.o`,
+      password: '1234',
       profile: {
         name: {
-          first: faker.name.firstName(),
-          last: faker.name.lastName(),
+          first: "Agent",
+          last: `${userCount}`,
         },
       },
       roles: ['user'],
       data(userId) {
-        return ordersSeed(userId);
+        return ordersSeed(userId, index);
       },
     };
-  },*/
+  },
 });
