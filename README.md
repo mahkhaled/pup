@@ -34,11 +34,6 @@ meteor npm start
 
 > Note : If you receive any errors in your terminal when you start up Pup related to `meteor npm install`, make sure to follow the suggested commands to ensure dependencies are properly installed.
 
-- The system is pre-loaded with a couple of office-boys. `officeboy1@gmail.com` & `officeboy2@gmail.com`. `Password : 123456`, for both of them
-> Note : You can use a any email for the officeboy, we will assign him a role in a moment.
-
-- Type in the command line : `meteor mongo` to open a mongo session
-
 - Now you're ready to signup with your email, and starting having your delicious snaks
 
 - AND, you're ready to start BADR Intern's Day 2018 challenges. Get ready to have some fun !
