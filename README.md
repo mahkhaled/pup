@@ -43,6 +43,26 @@ meteor npm start
 
 - AND, you're ready to start BADR Intern's Day 2018 challenges. Get ready to have some fun !
 
+## Challenges to complete
+
+1. Checkbox to hide old things
+..* In the orders list view of the user, show a check box, that when clicked the old orders would disappear from the view
+..* Bonus : Store this preference in the user profile (See this commit for example of how to store a configuration in the user profile : https://github.com/mostafaelganainy/pup/commit/42cc58b98aee00b3154ad2815700dbc081a31b25)
+2. When choosing a new order, select the user's default location
+..* You can refer to the following commit, to see how this was implemented in the profile of the user (Choosing his default location and showing it) : https://github.com/mostafaelganainy/pup/commit/42cc58b98aee00b3154ad2815700dbc081a31b25
+3. Play some sound when the office boy receive a new order
+..* Play the sound only when the office boy receives a new order that wasn't in his list before
+4. Rating
+..* Enable the users to rate the office boys, and show this rating in the office boy profile page.
+5. Status in progress (Office boy other than the assigned doesn’t see the in progress ones)
+..* Enable the office boy to assign an order to himself, by clicking on a button (Start in the orders list)
+..* This should result in the order's status changed to "assigned". And a new attribute in the order "Assignee", becomes equal to the userId of the current office boy
+..* Other office boys sbouldn't see orders except the ones assigned to them.
+6. ETA
+..* The data comes with a preloaded dataset. That dates back to one month ago. It's required to analyse this data and tell the user before he submits an order, how much time approximately would it take to prepare his order (Based on the history)
+
+
+
 ---
 
 Need help or questions ? contact us : hr@badrit.com
