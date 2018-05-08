@@ -45,7 +45,7 @@ meteor npm start
 
 ## Challenges to complete
 
-1. Checkbox to hide old things.
+- Checkbox to hide old things.
  - In the orders list view of the user, show a check box, that when clicked the old orders would disappear from the view
 ... Bonus : Store this preference in the user profile (See this commit for example of how to store a configuration in the user profile : https://github.com/mostafaelganainy/pup/commit/42cc58b98aee00b3154ad2815700dbc081a31b25)
 2. When choosing a new order, select the user's default location
