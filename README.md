@@ -27,7 +27,7 @@ You'll be required to complete a specific set of steps toward the goal of this c
 ## Getting Started 
 - First install the dependencies
 ```Bash
-git clone https://github.com/mostafaelganainy/pup.git mySnackTime
+git clone https://github.com/mohannad-hassan/pup.git mySnackTime
 cd mySnackTime && meteor npm install
 meteor npm start
 ```
@@ -48,8 +48,6 @@ meteor npm start
   - https://www.youtube.com/watch?v=Js8j36NbjB8
 - About the SampleApp
   - https://www.youtube.com/watch?v=ZxAeWmhsipM
-- About the problems
-  - https://www.youtube.com/watch?v=YDeVF4_EM0I
 
 ## Sample default users and their credentials 
 
@@ -62,27 +60,6 @@ user1@c.o | user | 1234
 user50@c.o | user | 1234
 officeboy1@c.o | office-boy | 1234
 officeboy2@c.o | office-boy | 1234
-
-
-## Challenges to complete
-
-- Checkbox to hide old things.
-  - In the orders list view of the user, show a check box, that when clicked the old orders would disappear from the view
-  - Bonus : Store this preference in the user profile (See this commit for example of how to store a configuration in the user profile : https://github.com/mostafaelganainy/pup/commit/42cc58b98aee00b3154ad2815700dbc081a31b25)
-- When choosing a new order, select the user's default location
-  - You can refer to the following commit, to see how this was implemented in the profile of the user (Choosing his default location and showing it) : https://github.com/mostafaelganainy/pup/commit/42cc58b98aee00b3154ad2815700dbc081a31b25
-- Play some sound when the office boy receive a new order.
-  - Play the sound only when the office boy receives a new order that wasn't in his list before
-- Rating
-  - Enable the users to rate the office boys, and show this rating in the office boy profile page.
-- Status in progress (Office boy other than the assigned doesn’t see the in progress ones)
-  - Enable the office boy to assign an order to himself, by clicking on a button (Start in the orders list)
-  - This should result in the order's status changed to "assigned". And a new attribute in the order "Assignee", becomes equal to the userId of the current office boy
-  - Other office boys sbouldn't see orders except the ones assigned to them.
-- ETA
-  - The data comes with a preloaded dataset. That dates back to one month ago. It's required to analyse this data and tell the user before he submits an order, how much time approximately would it take to prepare his order (Based on the history)
-
-
 
 ---
 
