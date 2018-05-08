@@ -43,6 +43,21 @@ meteor npm start
 
 - AND, you're ready to start BADR Intern's Day 2018 challenges. Get ready to have some fun !
 
+## Getting started Videos 
+
+- Intro
+  - https://www.youtube.com/watch?v=J6DGJ7ICIvY
+- About React
+  - https://www.youtube.com/watch?v=6o6ueJ8Q5SY
+- About Meteor
+  - https://www.youtube.com/watch?v=Js8j36NbjB8
+- About the SampleApp
+  - 
+- About the problems
+  - 
+
+
+
 ## Challenges to complete
 
 - Checkbox to hide old things.
