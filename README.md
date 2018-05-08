@@ -58,7 +58,7 @@ meteor npm start
   - Enable the office boy to assign an order to himself, by clicking on a button (Start in the orders list)
   - This should result in the order's status changed to "assigned". And a new attribute in the order "Assignee", becomes equal to the userId of the current office boy
   - Other office boys sbouldn't see orders except the ones assigned to them.
-6. ETA
+- ETA
   - The data comes with a preloaded dataset. That dates back to one month ago. It's required to analyse this data and tell the user before he submits an order, how much time approximately would it take to prepare his order (Based on the history)
 
 
