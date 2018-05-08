@@ -18,64 +18,69 @@ const StyledOrders = styled.div`
     vertical-align: middle;
   }
 `;
+class Orders extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-const Orders = ({
-  loading, ordersInProgress, oldOrders, match, history, blankIcon
-}) => {
-  return (!loading ? (
-    <StyledOrders>      
-      <div className="page-header clearfix">
-        <h4 className="pull-left">Orders In Progress</h4>
-        {
-          Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
-            ""
-          :
-            <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Order</Link>
-        }
-        
-      </div>
-      {
-        ordersInProgress.length ?
+  render() {
+    const {loading, ordersInProgress, oldOrders, match, history, blankIcon} = this.props;
+
+    return (!loading ? (
+      <StyledOrders>      
+        <div className="page-header clearfix">
+          <h4 className="pull-left">Orders In Progress</h4>
+            {
+              Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
+                ""
+              :
+                <Link className="btn btn-success pull-right" to={`${match.url}/new`}>Add Order</Link>
+            }
+            
+          </div>
+          {
+            ordersInProgress.length ?
+                <OrdersList
+                  orders={ordersInProgress}
+                  showActionButtons={true}
+                  history={history}
+                  match={match}
+                  showDeliveredDate={false}
+                />    
+             :          
+               Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
+                <BlankState
+                  icon={{ style: 'solid', symbol: 'smile' }}
+                  title="Wohoaaa, we have no more!"
+                  subtitle="You can take some well deserved rest."            
+                />
+               :
+                <BlankState
+                  icon={{ style: 'solid', symbol: 'utensils' }}
+                  title="Yesss, it's snack time!"
+                  subtitle="Let's fill up your energy tanks"
+                  action={{
+                    style: 'success',
+                    onClick: () => history.push(`${match.url}/new`),
+                    label: 'I need my snack',
+                  }}
+                />
+          }     
+          <div className="page-header clearfix">
+            <h4 className="pull-left">Delivered Orders</h4>      
+          </div>
+          {     
             <OrdersList
-              orders={ordersInProgress}
-              showActionButtons={true}
+              orders={oldOrders}
+              showActionButtons={false}
               history={history}
               match={match}
-              showDeliveredDate={false}
-            />    
-         :          
-           Roles.userIsInRole(Meteor.userId(), ['office-boy']) ?
-            <BlankState
-              icon={{ style: 'solid', symbol: 'smile' }}
-              title="Wohoaaa, we have no more!"
-              subtitle="You can take some well deserved rest."            
-            />
-           :
-            <BlankState
-              icon={{ style: 'solid', symbol: 'utensils' }}
-              title="Yesss, it's snack time!"
-              subtitle="Let's fill up your energy tanks"
-              action={{
-                style: 'success',
-                onClick: () => history.push(`${match.url}/new`),
-                label: 'I need my snack',
-              }}
-            />
-      }     
-      <div className="page-header clearfix">
-        <h4 className="pull-left">Delivered Orders</h4>      
-      </div>
-      {     
-        <OrdersList
-          orders={oldOrders}
-          showActionButtons={false}
-          history={history}
-          match={match}
-          showDeliveredDate={true}
-        /> 
-      }
-    </StyledOrders>
-  ) : <Loading />);
+              showDeliveredDate={true}
+            /> 
+          }
+        </StyledOrders>
+      ) : <Loading />);
+  }
 }
 
 Orders.propTypes = {
