@@ -52,9 +52,9 @@ meteor npm start
 - About Meteor
   - https://www.youtube.com/watch?v=Js8j36NbjB8
 - About the SampleApp
-  - 
+  - coming soon
 - About the problems
-  - 
+  - coming soon
 
 
 
