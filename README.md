@@ -54,7 +54,7 @@ meteor npm start
 - About the SampleApp
   - coming soon
 - About the problems
-  - coming soon
+  - https://www.youtube.com/watch?v=YDeVF4_EM0I
 
 ## Sample default users and their credentials 
 
