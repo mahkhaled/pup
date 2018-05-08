@@ -8,7 +8,8 @@ const { emailTemplates } = Accounts;
 const { productName } = Meteor.settings.public;
 
 emailTemplates.siteName = productName;
-emailTemplates.from = Meteor.settings.private.supportEmail;
+// TODO-R : We commented this for the sake of the Hackathon
+emailTemplates.from = 'a@o.com'; //Meteor.settings.private.supportEmail;
 
 emailTemplates.verifyEmail = {
   subject() {
