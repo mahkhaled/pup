@@ -56,6 +56,17 @@ meteor npm start
 - About the problems
   - coming soon
 
+## Sample default users and their credentials 
+
+User email | User type | Password
+------------ | ------------- | ------------
+user1@c.o | user | 1234
+user1@c.o | user | 1234
+... | ... | ...
+... | ... | ...
+user50@c.o | user | 1234
+officeboy1@c.o | office-boy | 1234
+officeboy2@c.o | office-boy | 1234
 
 
 ## Challenges to complete
